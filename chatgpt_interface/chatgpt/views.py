@@ -1,17 +1,29 @@
 # views.py 
 from django.shortcuts import render, redirect
-from .models import GPTSub
+from .models import GPTSub, ImagePrompt
 from django.urls import reverse
 from django.http import HttpResponse
-from .forms import GPTRequestForm, get_model_choices, get_top_p_choices, get_temperature_choices
-import openai
+from .forms import GPTRequestForm, get_model_choices, get_top_p_choices, get_temperature_choices, ImagePromptForm
+import openai 
+import requests
+import json
+
+
+
+my_api_key = "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"
 
 
 DEFAULT_TEMPERATURE = 1.0
 DEFAULT_TOP_P = 0.9
 
+
 def index(request):
-    return HttpResponse("Hello, world. You're at the letters index.")
+    if request.method == 'POST':
+        if request.POST.get('gpt_sub_button'):
+            return redirect('gpt_sub')
+        elif request.POST.get('image_prompt_button'):
+            return redirect('image_prompt')
+    return render(request, 'index.html')
 
 
 def handle_gpt_request(request):
@@ -24,8 +36,7 @@ def handle_gpt_request(request):
             model = form.cleaned_data.get('model') or 'best'
             response_name = form.cleaned_data.get('response_name')
             num_tokens = form.cleaned_data.get('num_tokens')
-            # Call GPT-3 API using prompt, temperature, top_p and model
-            # and handle the response
+            # create GPTSub instance and save to the database
             gpt_request = GPTSub.objects.create(prompt=prompt, temperature=temperature, top_p=top_p, model=model,response_name=response_name,num_tokens=num_tokens)
             return redirect('gpt_response', gpt_request.pk)
     else:
@@ -35,7 +46,7 @@ def handle_gpt_request(request):
 
 def handle_gpt_response(request, pk):
     gpt_response = GPTSub.objects.get(pk=pk)
-    openai.api_key = "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"
+    openai.api_key = my_api_key
     response = openai.Completion.create(
         engine=gpt_response.model,
         prompt=gpt_response.prompt,
@@ -46,3 +57,94 @@ def handle_gpt_response(request, pk):
     gpt_response.response = response["choices"][0]["text"]
     gpt_response.save()
     return render(request, 'gpt_response.html', {'gpt_response': gpt_response})
+
+
+
+def list_gpt_sub_responses(request):
+    gpt_sub_responses = GPTSub.objects.all()
+    print(gpt_sub_responses)
+    return render(request, 'gpt_sub_response_list.html', {'gpt_sub_responses': gpt_sub_responses})
+
+def edit_gpt_sub_response(request, pk):
+    gpt_sub_response = GPTSub.objects.get(pk=pk)
+    if request.method == 'POST':
+        gpt_sub_response.prompt = request.POST['prompt']
+        gpt_sub_response.response = request.POST['response']
+        gpt_sub_response.save()
+        return redirect('gpt_sub_response_list')
+    return render(request, 'gpt_sub_response_edit.html', {'gpt_sub_response': gpt_sub_response})
+
+def delete_gpt_sub_response(request, pk):
+    gpt_sub_response = GPTSub.objects.get(pk=pk)
+    gpt_sub_response.delete()
+    return redirect('gpt_sub_response_list')
+
+##########################################################################
+
+
+def handle_image_prompt_request(request):
+    if request.method == 'POST':
+        form = ImagePromptForm(request.POST)
+        if form.is_valid():
+            prompt = form.cleaned_data['prompt']
+            n = form.cleaned_data['n']
+            size = form.cleaned_data['size']
+            response_format = form.cleaned_data['response_format']
+            # Call GPT-3 API using prompt
+            # and handle the response
+            image_prompt = ImagePrompt.objects.create(prompt=prompt, n=n, size=size, response_format=response_format)
+            return redirect('image_prompt_response', image_prompt.pk)
+    else:
+        form = ImagePromptForm()
+    return render(request, 'image_prompt_template.html', {'form': form})
+
+
+def handle_image_prompt_response(request, pk):
+    image_prompt_response = ImagePrompt.objects.get(pk=pk)
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {my_api_key}'
+    }
+
+    data = {
+        'prompt': image_prompt_response.prompt,
+        'n': image_prompt_response.n,
+        'size': image_prompt_response.size
+    }
+
+    response = requests.post('https://api.openai.com/v1/images/generations', headers=headers, data=json.dumps(data))
+    response_data = response.json()
+    image_urls = [item['url'] for item in response_data['data']]
+
+    return render(request, 'image_prompt_response.html', {'image_prompt_response': image_prompt_response, 'image_urls': image_urls})
+
+
+
+
+
+
+
+
+
+# def handle_image_prompt_response(request, pk):
+#     image_prompt_response = ImagePrompt.objects.get(pk=pk)
+#     headers = {
+#         'Content-Type': 'application/json',
+#         'Authorization': f'Bearer {my_api_key}'
+#     }
+
+#     data = {
+#         'prompt': image_prompt_response.prompt,
+#         'n': image_prompt_response.n,
+#         'size': image_prompt_response.size
+#     }
+
+#     response = requests.post('https://api.openai.com/v1/images/generations', headers=headers, data=json.dumps(data))
+#     response_data = response.json()
+#     url = response_data['data'][0]['url']
+#     image_prompt_response.response = url if image_prompt_response.response_format == 'url' else response_data['data'][0]['data']
+#     image_prompt_response.save()
+
+#     return render(request, 'image_prompt_response.html', {'image_prompt_response': image_prompt_response, 'url': url})
+
+

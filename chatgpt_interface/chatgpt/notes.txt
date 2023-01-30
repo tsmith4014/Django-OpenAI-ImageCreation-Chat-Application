@@ -1,0 +1,70 @@
+i would like to include the ability to make POST request to https://api.openai.com/v1/images/generations and add the option for image generation to my django application.
+
+
+can you write that functionality and comment out what it does.
+
+
+
+GPT-3 Response
+Prompt: i would like to include the ability to make POST request to https://api.openai.com/v1/images/generations and add the option for image generation to my django application below # views.py from django.shortcuts import render, redirect from .models import GPTSub from django.urls import reverse from django.http import HttpResponse from .forms import GPTRequestForm, get_model_choices, get_top_p_choices, get_temperature_choices import openai DEFAULT_TEMPERATURE = 1.0 DEFAULT_TOP_P = 0.9 def index(request): return HttpResponse("Hello, world. You're at the letters index.") def handle_gpt_request(request): if request.method == 'POST': form = GPTRequestForm(request.POST) if form.is_valid(): prompt = form.cleaned_data['prompt'] temperature = float(form.cleaned_data.get('temperature') or DEFAULT_TEMPERATURE) top_p = float(form.cleaned_data.get('top_p') or DEFAULT_TOP_P) model = form.cleaned_data.get('model') or 'best' response_name = form.cleaned_data.get('response_name') num_tokens = form.cleaned_data.get('num_tokens') # Call GPT-3 API using prompt, temperature, top_p and model # and handle the response gpt_request = GPTSub.objects.create(prompt=prompt, temperature=temperature, top_p=top_p, model=model,response_name=response_name,num_tokens=num_tokens) return redirect('gpt_response', gpt_request.pk) else: form = GPTRequestForm() return render(request, 'gpt_template.html', {'form': form}) def handle_gpt_response(request, pk): gpt_response = GPTSub.objects.get(pk=pk) openai.api_key = "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" response = openai.Completion.create( engine=gpt_response.model, prompt=gpt_response.prompt, temperature=float(gpt_response.temperature), top_p=float(gpt_response.top_p), max_tokens=gpt_response.num_tokens, ) gpt_response.response = response["choices"][0]["text"] gpt_response.save() return render(request, 'gpt_response.html', {'gpt_response': gpt_response}) # Forms from django import forms def get_temperature_choices(): return ( (0.0, '0.0 - Least Creative'), (0.25, '0.25'), (0.5, '0.5'), (0.75, '0.75'), (1.0, '1.0'), (1.25, '1.25'), (1.5, '1.5'), (1.75, '1.75'), (2.0, '2.0 - Most Creative'), ) def get_top_p_choices(): return ( (0.0, '0.0 - Least Diverse'), (0.1, '0.1'), (0.2, '0.2'), (0.3, '0.3'), (0.4, '0.4'), (0.5, '0.5- Mid-Point'), (0.6, '0.6'), (0.7, '0.7'), (0.8, '0.8'), (0.9, '0.9'), (1.0, '1.0 - Most Diverse'), ) def get_model_choices(): return ( ('text-davinci-002', 'Davinci-002'), ('code-davinci-002', 'Code Generation 8000 MAX Tokens'), ('text-davinci-003', 'Best Overall 4000 MAX Tokens'), ) class GPTRequestForm(forms.Form): prompt = forms.CharField(widget=forms.Textarea) temperature = forms.ChoiceField(choices=get_temperature_choices()) top_p = forms.ChoiceField(choices=get_top_p_choices()) response_name = forms.CharField(max_length=255) num_tokens = forms.IntegerField() model = forms.ChoiceField(choices=get_model_choices()) # models.py from django.db import models class GPTSub(models.Model): prompt = models.TextField() temperature = models.DecimalField(max_digits=2, decimal_places=1) top_p = models.DecimalField(max_digits=3, decimal_places=2) model = models.CharField(max_length=255) #choices=get_model_choices() num_tokens = models.IntegerField() response_name = models.CharField(max_length=255) response = models.CharField(max_length=10000) def __str__(self): return self.prompt
+
+Temperature: 0.5
+
+Top P: 0.90
+
+Model: text-davinci-003
+
+Response: # urls.py from django.urls import path from . import views urlpatterns = [ path('', views.index, name='index'), path('gpt/', views.handle_gpt_request, name='gpt_request'), path('gpt/<int:pk>/', views.handle_gpt_response, name='gpt_response'), path('image_generation/', views.handle_image_generation, name='image_generation'), ] # views.py def handle_image_generation(request): if request.method == 'POST': form = ImageGenerationForm(request.POST) if form.is_valid(): # Make POST request to OpenAI API and handle response openai.api_key = "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" prompt = form.cleaned_data['prompt'] response_name = form.cleaned_data.get('response_name') response = openai.ImageGeneration.create( prompt=prompt, ) image_generation_response = ImageGenerationSub.objects.create(prompt=prompt, response_name=response_name, response=response) return redirect('image_generation_response', image_generation_response.pk) else: form = ImageGenerationForm() return render(request, 'image_generation_template.html', {'form': form}) # models.py class ImageGenerationSub(models.Model): prompt = models.TextField() response_name = models.CharField(max_length=255) response = models.TextField() def __str__(self): return self.prompt # forms.py from django import forms class ImageGenerationForm(forms.Form): prompt = forms.CharField(widget=forms.Textarea) response_name = forms.CharField(max_length=255)
+
+
+
+
+ # def handle_gpt_request(request):
+#     if request.method == 'POST':
+#         form = GPTRequestForm(request.POST)
+#         if form.is_valid():
+#             prompt = form.cleaned_data['prompt']
+#             temperature = float(form.cleaned_data.get('temperature') or DEFAULT_TEMPERATURE)
+#             top_p = float(form.cleaned_data.get('top_p') or DEFAULT_TOP_P)
+#             model = form.cleaned_data.get('model') or 'best'
+#             response_name = form.cleaned_data.get('response_name')
+#             num_tokens = form.cleaned_data.get('num_tokens')
+#             request_type = form.cleaned_data.get('request_type')
+
+#             if request_type == 'text':
+#                 # Call GPT-3 API using prompt, temperature, top_p and model
+#                 # and handle the response
+#                 gpt_request = GPTSub.objects.create(prompt=prompt, temperature=temperature, top_p=top_p, model=model, response_name=response_name, num_tokens=num_tokens)
+#                 return redirect('gpt_response', gpt_request.pk)
+#             elif request_type == 'image':
+#                 # Make a POST request to the OpenAI Image API
+#                 # and handle the response
+#                 headers = {
+#                     "Content-Type": "application/json",
+#                     "Authorization": f"Bearer {openai.api_key}"
+#                 }
+#                 data = {
+#                     "model": model,
+#                     "prompt": prompt,
+#                     "num_images": 1
+#                 }
+#                 response = requests.post(
+#                     "https://api.openai.com/v1/images/generations",
+#                     headers=headers,
+#                     json=data
+#                 )
+
+#                 if response.status_code == 200:
+#                     response_json = response.json()
+#                     image_url = response_json['data'][0]['url']
+#                     image_request = ImageSub.objects.create(prompt=prompt, model=model, image_url=image_url)
+#                     return redirect('image_response', image_request.pk)
+#                 else:
+#                     # Handle error in response
+#                     pass
+#             else:
+#                 # Handle invalid request type
+#                 pass
+#         else:
+#             form = GPTRequestForm()
+#     return render(request, 'gpt_template.html', {'form': form})

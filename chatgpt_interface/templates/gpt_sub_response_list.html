@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GPTSub Response List</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #ddd;
+      }
+
+      a {
+        text-decoration: none;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>GPTSub Response List</h1>
+    <table>
+      <tr>
+        <th>Prompt</th>
+        <th>Response</th>
+        <th>Actions</th>
+      </tr>
+      {% for gpt_sub_response in gpt_sub_responses %}
+      <tr>
+        <td>{{ gpt_sub_response.prompt }}</td>
+        <td>{{ gpt_sub_response.response }}</td>
+        <td>
+          <a href="{% url 'gpt_sub_response_edit' gpt_sub_response.pk %}"
+            >Edit</a
+          >
+          |
+          <a
+            href="{% url 'gpt_sub_response_delete' gpt_sub_response.pk %}"
+            onclick="return confirm('Are you sure you want to delete this response?');"
+            >Delete</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

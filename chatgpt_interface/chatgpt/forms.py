@@ -49,3 +49,12 @@ class GPTRequestForm(forms.Form):
     model = forms.ChoiceField(choices=get_model_choices())
 
 
+
+class ImagePromptForm(forms.Form):
+    prompt = forms.CharField(widget=forms.Textarea)
+    n = forms.IntegerField()
+    size = forms.CharField(max_length=9)
+    response_format = forms.CharField(max_length=12)
+
+
+

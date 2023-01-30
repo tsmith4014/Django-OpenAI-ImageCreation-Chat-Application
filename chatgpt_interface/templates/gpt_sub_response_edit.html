@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit GPTSub Response</title>
+  </head>
+  <body>
+    <h1>Edit GPTSub Response</h1>
+    <form method="post">
+      {% csrf_token %}
+      <label for="prompt">Prompt:</label>
+      <input
+        type="text"
+        id="prompt"
+        name="prompt"
+        value="{{ gpt_sub_response.prompt }}"
+      />
+      <br /><br />
+      <label for="response">Response:</label>
+      <textarea id="response" name="response">
+{{ gpt_sub_response.response }}</textarea
+      >
+      <br /><br />
+      <input type="submit" value="Save" />
+    </form>
+  </body>
+</html>

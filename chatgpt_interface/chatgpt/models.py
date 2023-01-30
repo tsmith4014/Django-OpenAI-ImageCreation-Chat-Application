@@ -13,4 +13,30 @@ class GPTSub(models.Model):
     def __str__(self):
         return self.prompt
 
+        
+class ImagePrompt(models.Model):
+    prompt = models.TextField(max_length=1000)
+    n = models.PositiveSmallIntegerField(default=1)
+    size = models.CharField(max_length=9, default='1024x1024')
+    response_format = models.CharField(max_length=12, default='url')
 
+
+    def __str__(self):
+        return self.prompt
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class ImageSub(models.Model):
+#     prompt = models.TextField()
+#     n = RangeIntegerField(min_value=1, max_value=10)
+#     size = models.CharField(max_length=10)

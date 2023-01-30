@@ -1,0 +1,15 @@
+<h2>ChatGPT Images</h2>
+{% if image_prompt_response.response %} {% for url in
+image_prompt_response.response %}
+<a href="{{ url }}"><img src="{{ url }}" alt="Generated Image" /></a>
+<br /><br />
+{% endfor %} {% endif %}
+<p>Image Prompt: {{ image_prompt_response.prompt }}</p>
+
+<!-- <h2>ChatGPT Image Link</h2>
+{% if url %}
+<a href="{{ url }}">{{ url }}</a> <br /><br /><br />
+{% endif %} Or if you want to display it as just plain text:<br /><br /><br />
+{{ url }}<br /><br />
+
+<p>Image Prompt: {{ image_prompt_response.prompt }}</p> -->
