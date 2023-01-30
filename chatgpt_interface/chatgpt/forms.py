@@ -1,6 +1,11 @@
 # Forms
 from django import forms
 
+
+DEFAULT_TEMPERATURE = 1.0
+DEFAULT_TOP_P = 0.9
+
+
 def get_temperature_choices():
     return (
         (0.0, '0.0 - Least Creative'),
@@ -42,8 +47,8 @@ def get_model_choices():
 
 class GPTRequestForm(forms.Form):
     prompt = forms.CharField(widget=forms.Textarea)
-    temperature = forms.ChoiceField(choices=get_temperature_choices())
-    top_p = forms.ChoiceField(choices=get_top_p_choices())
+    temperature = forms.ChoiceField(choices=get_temperature_choices(), initial=DEFAULT_TEMPERATURE)
+    top_p = forms.ChoiceField(choices=get_top_p_choices(), initial=DEFAULT_TOP_P)
     response_name = forms.CharField(max_length=255)
     num_tokens = forms.IntegerField()
     model = forms.ChoiceField(choices=get_model_choices())
@@ -53,8 +58,17 @@ class GPTRequestForm(forms.Form):
 class ImagePromptForm(forms.Form):
     prompt = forms.CharField(widget=forms.Textarea)
     n = forms.IntegerField()
-    size = forms.CharField(max_length=9)
-    response_format = forms.CharField(max_length=12)
+    size = forms.CharField(max_length=9, initial='1024x1024')
+    response_format = forms.CharField(max_length=12, initial='url')
 
 
 
+
+class EditGPTSubResponseForm(forms.Form):
+    # prompt = forms.CharField(max_length=100)
+    prompt = forms.CharField(max_length=50)
+    response = forms.CharField(
+        label='Sub Response',
+        widget=forms.Textarea,
+        max_length=1024
+    )

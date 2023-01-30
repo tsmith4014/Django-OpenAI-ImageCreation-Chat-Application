@@ -3,9 +3,9 @@ from django.db import models
 
 class GPTSub(models.Model):
     prompt = models.TextField()
-    temperature = models.DecimalField(max_digits=2, decimal_places=1)
-    top_p = models.DecimalField(max_digits=3, decimal_places=2)
-    model = models.CharField(max_length=255)  #choices=get_model_choices()
+    temperature = models.DecimalField(max_digits=2, decimal_places=1, default=1.0)
+    top_p = models.DecimalField(max_digits=3, decimal_places=2, default=0.9)
+    model = models.CharField(max_length=255)  
     num_tokens = models.IntegerField()
     response_name = models.CharField(max_length=255)
     response = models.CharField(max_length=10000)
@@ -25,18 +25,3 @@ class ImagePrompt(models.Model):
         return self.prompt
 
 
-
-
-
-
-
-
-
-
-
-
-
-# class ImageSub(models.Model):
-#     prompt = models.TextField()
-#     n = RangeIntegerField(min_value=1, max_value=10)
-#     size = models.CharField(max_length=10)

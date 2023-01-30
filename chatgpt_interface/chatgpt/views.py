@@ -1,14 +1,12 @@
 # views.py 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import GPTSub, ImagePrompt
 from django.urls import reverse
 from django.http import HttpResponse
-from .forms import GPTRequestForm, get_model_choices, get_top_p_choices, get_temperature_choices, ImagePromptForm
+from .forms import GPTRequestForm, get_model_choices, get_top_p_choices, get_temperature_choices, ImagePromptForm, EditGPTSubResponseForm
 import openai 
 import requests
 import json
-
-
 
 my_api_key = "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"
 
@@ -65,19 +63,31 @@ def list_gpt_sub_responses(request):
     print(gpt_sub_responses)
     return render(request, 'gpt_sub_response_list.html', {'gpt_sub_responses': gpt_sub_responses})
 
+
 def edit_gpt_sub_response(request, pk):
     gpt_sub_response = GPTSub.objects.get(pk=pk)
+    form = EditGPTSubResponseForm(request.POST or None, initial={'response': gpt_sub_response.response, 'prompt': gpt_sub_response.prompt})
+
     if request.method == 'POST':
-        gpt_sub_response.prompt = request.POST['prompt']
-        gpt_sub_response.response = request.POST['response']
-        gpt_sub_response.save()
-        return redirect('gpt_sub_response_list')
-    return render(request, 'gpt_sub_response_edit.html', {'gpt_sub_response': gpt_sub_response})
+        if form.is_valid():
+            gpt_sub_response.response = form.cleaned_data['response']
+            gpt_sub_response = form.cleaned_data['prompt']
+            gpt_sub_response.save()
+            return redirect('gpt_sub_response_list')
+
+    return render(request, 'gpt_sub_response_edit.html', {'form': form})
+
+
+
+
 
 def delete_gpt_sub_response(request, pk):
     gpt_sub_response = GPTSub.objects.get(pk=pk)
-    gpt_sub_response.delete()
-    return redirect('gpt_sub_response_list')
+    if request.method == 'POST':
+        gpt_sub_response.delete()
+        return redirect('gpt_sub_response_list')
+    return render(request, 'gpt_sub_response_confirm_delete.html', {'gpt_sub_response': gpt_sub_response})
+
 
 ##########################################################################
 
@@ -99,8 +109,10 @@ def handle_image_prompt_request(request):
     return render(request, 'image_prompt_template.html', {'form': form})
 
 
+
 def handle_image_prompt_response(request, pk):
     image_prompt_response = ImagePrompt.objects.get(pk=pk)
+    print(image_prompt_response, 'this is the image_prompt_response')
     headers = {
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {my_api_key}'
@@ -115,36 +127,19 @@ def handle_image_prompt_response(request, pk):
     response = requests.post('https://api.openai.com/v1/images/generations', headers=headers, data=json.dumps(data))
     response_data = response.json()
     image_urls = [item['url'] for item in response_data['data']]
-
     return render(request, 'image_prompt_response.html', {'image_prompt_response': image_prompt_response, 'image_urls': image_urls})
 
 
 
 
 
-
-
-
-
-# def handle_image_prompt_response(request, pk):
-#     image_prompt_response = ImagePrompt.objects.get(pk=pk)
-#     headers = {
-#         'Content-Type': 'application/json',
-#         'Authorization': f'Bearer {my_api_key}'
-#     }
-
-#     data = {
-#         'prompt': image_prompt_response.prompt,
-#         'n': image_prompt_response.n,
-#         'size': image_prompt_response.size
-#     }
-
-#     response = requests.post('https://api.openai.com/v1/images/generations', headers=headers, data=json.dumps(data))
-#     response_data = response.json()
-#     url = response_data['data'][0]['url']
-#     image_prompt_response.response = url if image_prompt_response.response_format == 'url' else response_data['data'][0]['data']
-#     image_prompt_response.save()
-
-#     return render(request, 'image_prompt_response.html', {'image_prompt_response': image_prompt_response, 'url': url})
-
-
+    # def edit_gpt_sub_response(request, pk):
+#     gpt_sub_response = GPTSub.objects.get(id=pk)
+#     if request.method == 'POST':
+#         form = GPTRequestForm(request.POST, instance=gpt_sub_response)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('gpt_sub_response_list')
+#     else:
+#         form = GPTRequestForm(instance=gpt_sub_response)
+#     return render(request, 'gpt_sub_response_edit.html', {'form': form})
