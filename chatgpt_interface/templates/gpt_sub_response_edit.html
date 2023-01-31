@@ -4,21 +4,19 @@
     <title>Edit GPTSub Response</title>
   </head>
   <body>
-    <h1>Edit GPTSub Response</h1>
+    <h1>Edit GPTSub Response Test</h1>
     <form method="post">
       {% csrf_token %}
-      <label for="prompt">Prompt:</label>
-      <input
-        type="text"
-        id="prompt"
-        name="prompt"
-        value="{{ gpt_sub_response.prompt }}"
-      />
-      <br /><br />
-      <label for="response">Response:</label>
-      <textarea id="response" name="response">{{ form.response.value }}</textarea>
-      <br /><br />
+      {{ form.as_p }}
       <input type="submit" value="Save" />
     </form>
+    <form action="{% url 'gpt_sub_response_list' %}" method="get">
+      <input type="submit" value="View GPT Sub Responses">
+    </form>
+    <form action="{% url 'gpt_sub_response_list' %}" method="get">
+      
+    </form>
+    
   </body>
 </html>
+

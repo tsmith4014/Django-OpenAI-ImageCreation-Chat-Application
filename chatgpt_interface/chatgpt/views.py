@@ -28,13 +28,27 @@ def handle_gpt_request(request):
     if request.method == 'POST':
         form = GPTRequestForm(request.POST)
         if form.is_valid():
-            prompt = form.cleaned_data['prompt']
-            temperature = float(form.cleaned_data.get('temperature') or DEFAULT_TEMPERATURE)
-            top_p = float(form.cleaned_data.get('top_p') or DEFAULT_TOP_P)
-            model = form.cleaned_data.get('model') or 'best'
-            response_name = form.cleaned_data.get('response_name')
-            num_tokens = form.cleaned_data.get('num_tokens')
-            # create GPTSub instance and save to the database
+            gpt_sub = form.save(commit=False)
+            prompt = gpt_sub.prompt
+            temperature = gpt_sub.temperature
+            top_p = gpt_sub.top_p
+            model = gpt_sub.model
+            num_tokens = gpt_sub.num_tokens
+            response_name = gpt_sub.response_name
+            gpt_sub.save()
+            
+            headers = {
+                "Authorization": "Bearer {}".format(my_api_key),
+                "Content-Type": "application/json",
+            }
+            data = {
+                "prompt": prompt,
+                "temperature": float(temperature),
+                "top_p": float(top_p),
+                "model": model,
+                "max_tokens": int(num_tokens),
+            }
+
             gpt_request = GPTSub.objects.create(prompt=prompt, temperature=temperature, top_p=top_p, model=model,response_name=response_name,num_tokens=num_tokens)
             return redirect('gpt_response', gpt_request.pk)
     else:
@@ -71,13 +85,11 @@ def edit_gpt_sub_response(request, pk):
     if request.method == 'POST':
         if form.is_valid():
             gpt_sub_response.response = form.cleaned_data['response']
-            gpt_sub_response = form.cleaned_data['prompt']
+            gpt_sub_response.prompt = form.cleaned_data['prompt']
             gpt_sub_response.save()
             return redirect('gpt_sub_response_list')
 
     return render(request, 'gpt_sub_response_edit.html', {'form': form})
-
-
 
 
 

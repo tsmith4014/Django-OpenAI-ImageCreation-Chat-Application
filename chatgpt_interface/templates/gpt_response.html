@@ -4,3 +4,7 @@
 <p>Top P: {{ gpt_response.top_p }}</p>
 <p>Model: {{ gpt_response.model }}</p>
 <p>Response: {{ gpt_response.response }}</p>
+<P><form action="{% url 'gpt_sub_response_list' %}" method="get">
+  <input type="submit" value="View GPT Sub Responses">
+</form>
+</P>

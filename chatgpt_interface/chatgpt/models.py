@@ -8,7 +8,7 @@ class GPTSub(models.Model):
     model = models.CharField(max_length=255)  
     num_tokens = models.IntegerField()
     response_name = models.CharField(max_length=255)
-    response = models.CharField(max_length=10000)
+    response = models.TextField()
 
     def __str__(self):
         return self.prompt

@@ -3,3 +3,7 @@
   {% csrf_token %} {{ form.as_p }}
   <input type="submit" value="Submit" />
 </form>
+<p><form action="{% url 'gpt_sub_response_list' %}" method="get">
+  <input type="submit" value="View GPT Sub Responses">
+</form>
+</p>
