@@ -7,8 +7,9 @@ from .forms import GPTRequestForm, get_model_choices, get_top_p_choices, get_tem
 import openai 
 import requests
 import json
+from decouple import config
 
-my_api_key = "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"
+my_api_key = config('OPENAI_KEY')
 
 
 DEFAULT_TEMPERATURE = 1.0
@@ -140,18 +141,3 @@ def handle_image_prompt_response(request, pk):
     response_data = response.json()
     image_urls = [item['url'] for item in response_data['data']]
     return render(request, 'image_prompt_response.html', {'image_prompt_response': image_prompt_response, 'image_urls': image_urls})
-
-
-
-
-
-    # def edit_gpt_sub_response(request, pk):
-#     gpt_sub_response = GPTSub.objects.get(id=pk)
-#     if request.method == 'POST':
-#         form = GPTRequestForm(request.POST, instance=gpt_sub_response)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('gpt_sub_response_list')
-#     else:
-#         form = GPTRequestForm(instance=gpt_sub_response)
-#     return render(request, 'gpt_sub_response_edit.html', {'form': form})
