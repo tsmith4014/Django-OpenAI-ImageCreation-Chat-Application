@@ -63,7 +63,7 @@ Remember to replace your_openai_key with your actual OpenAI API key.
 Important: Do not include the .env file in the version control to keep your API key secure.
 
 ### Running the Server
-After configuration, you can start the Django development server:
+After configuration, you can start the Django development server by navigating to the root directory of the project and running the following command:
 ```python 
     python manage.py runserver
 ```
