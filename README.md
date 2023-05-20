@@ -57,14 +57,15 @@ $env:OPENAI_KEY="your_openai_key"
 
 You can also use a .env file in the root directory to set the environment variables. 
 This file should contain key-value pairs representing the environment variables:
-```OPENAI_KEY=your_openai_key
-```
+    OPENAI_KEY=your_openai_key
+
 Remember to replace your_openai_key with your actual OpenAI API key.
 Important: Do not include the .env file in the version control to keep your API key secure.
 
-##Running the Server
+### Running the Server
 After configuration, you can start the Django development server:
-```python manage.py runserver
+```python 
+    manage.py runserver
 ```
 Now you can access the application in your web browser at `http://127.0.0.1:8000/chatgpt/`
 
