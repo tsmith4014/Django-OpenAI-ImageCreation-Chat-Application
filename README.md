@@ -21,11 +21,11 @@ This is a Django-based application designed to interact with OpenAI's GPT models
 ### Installation
 1. Clone this repository:
     ```
-    git clone https://github.com/<your-github-username>/<repository-name>
+    git clone https://github.com/tsmith4014/chatgpt_interface.git
     ```
 2. Navigate into the project directory:
     ```
-    cd <repository-name>
+    cd <chatgpt_interface.git>
     ```
 3. Install the required Python packages:
     ```
