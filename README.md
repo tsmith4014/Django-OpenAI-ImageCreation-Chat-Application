@@ -71,7 +71,11 @@ Now you can access the application in your web browser at `http://127.0.0.1:8000
 
 ### Usage
 
-The application provides a user interface for interacting with OpenAI's GPT models. The home page presents options to either generate text or image responses.
+The application provides a user-friendly form to submit your prompts to the GPT models. You can specify various parameters like temperature, top_p, model, and num_tokens.
+
+Once you submit the form, the application sends a request to the OpenAI API and shows the generated response. The responses are stored in a database and can be viewed, edited, and deleted later.
+
+For generating image prompts, the application provides a different form where you can specify the prompt, n, size, and response_format. The generated images are displayed in the response.
 
 #### Text Generation
 
@@ -89,12 +93,16 @@ After submission, the application sends the request to the OpenAI GPT model, ret
 
 You can view all stored responses by selecting 'View Stored Responses'. This will display a list of stored responses. You can also edit and delete the stored responses.
 
-## Contributing
+### Contributing
 
-Feel free to contribute to this project by creating a pull request. For major changes, please open an issue first to discuss the changes you want to make.
+We welcome contributions to this project. If you want to contribute, please fork the repository, make your changes, and submit a pull request. We will review it and merge your changes.
 
-## License
+### License
 
 This project is licensed under the MIT License.
 
+### Contact
+If you have any questions or suggestions, feel free to open an issue on this repository.
 
+### Acknowledgements
+Thanks to OpenAI for providing the GPT models and the API.
