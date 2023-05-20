@@ -68,25 +68,32 @@ After configuration, you can start the Django development server:
 ```
 Now you can access the application in your web browser at `http://127.0.0.1:8000/chatgpt/`
 
-##Usage
+### Usage
+
 The application provides a user interface for interacting with OpenAI's GPT models. The home page presents options to either generate text or image responses.
 
-##Text Generation
+#### Text Generation
+
 By selecting 'Generate Text', you are directed to a form where you can input your prompt and parameters for the GPT model (temperature, top_p, model, and num_tokens).
 
 After submission, the application sends the request to the OpenAI GPT model, retrieves the generated text, and displays it to you. The response is also stored in the database for future reference.
 
-##Image Generation
-By selecting 'Generate Image', you are directed to a form where you can input your prompt and parameters for the image generation.
+#### Image Generation
+
+By selecting 'Generate Image', you are directed to a form where you can input your prompt and parameters for image generation.
 
 After submission, the application sends the request to the OpenAI GPT model, retrieves the generated image URLs, and displays them to you. The response is also stored in the database for future reference.
 
-##Viewing Stored Responses
+#### Viewing Stored Responses
+
 You can view all stored responses by selecting 'View Stored Responses'. This will display a list of stored responses. You can also edit and delete the stored responses.
 
-##Contributing
+## Contributing
+
 Feel free to contribute to this project by creating a pull request. For major changes, please open an issue first to discuss the changes you want to make.
 
-##License
+## License
+
 This project is licensed under the MIT License.
+
 
