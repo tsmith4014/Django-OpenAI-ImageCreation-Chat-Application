@@ -65,7 +65,7 @@ Important: Do not include the .env file in the version control to keep your API 
 ### Running the Server
 After configuration, you can start the Django development server:
 ```python 
-    manage.py runserver
+    python manage.py runserver
 ```
 Now you can access the application in your web browser at `http://127.0.0.1:8000/chatgpt/`
 
@@ -83,7 +83,7 @@ After submission, the application sends the request to the OpenAI GPT model, ret
 
 By selecting 'Generate Image', you are directed to a form where you can input your prompt and parameters for image generation.
 
-After submission, the application sends the request to the OpenAI GPT model, retrieves the generated image URLs, and displays them to you. The response is also stored in the database for future reference.
+After submission, the application sends the request to the OpenAI GPT model, retrieves the generated image URLs, and displays them to you. The response is also stored in the database for future reference however currently the images are not stored and the user must save the images from the page directly.  *Note this will be improved upon in the future with images being stored to a directroy of choice by the user.
 
 #### Viewing Stored Responses
 
