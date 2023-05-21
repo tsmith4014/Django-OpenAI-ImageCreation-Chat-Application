@@ -24,7 +24,7 @@ class TestViews(TestCase):
             response_format='url'
         )
 
-        self.index_url = reverse('gpt_index')
+        self.index_url = reverse('home')
         self.gpt_sub_url = reverse('gpt_request')
         self.gpt_response_url = reverse('gpt_response', args=[self.test_gpt_sub.id])
         self.gpt_sub_responses_url = reverse('gpt_sub_response_list')

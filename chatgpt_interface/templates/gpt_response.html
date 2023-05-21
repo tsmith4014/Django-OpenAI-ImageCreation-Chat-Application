@@ -1,10 +1,16 @@
-<h1>GPT-3 Response</h1>
-<p>Prompt: {{ gpt_response.prompt }}</p>
-<p>Temperature: {{ gpt_response.temperature }}</p>
-<p>Top P: {{ gpt_response.top_p }}</p>
-<p>Model: {{ gpt_response.model }}</p>
-<p>Response: {{ gpt_response.response }}</p>
-<P><form action="{% url 'gpt_sub_response_list' %}" method="get">
-  <input type="submit" value="View GPT Sub Responses">
-</form>
-</P>
+<!-- gpt_response.html -->
+<body style="text-align:center;">
+  <h1>GPT-3 Response</h1>
+  <p>Prompt: {{ gpt_response.prompt }}</p>
+  <p>Temperature: {{ gpt_response.temperature }}</p>
+  <p>Top P: {{ gpt_response.top_p }}</p>
+  <p>Model: {{ gpt_response.model }}</p>
+  <p>Tokens used in prompt: {{ gpt_response.prompt_tokens }}</p>
+  <p>Tokens used in response: {{ gpt_response.response_tokens }}</p>
+  <p>Total tokens used: {{ gpt_response.tokens_used }}</p>
+  <p>Response: {{ gpt_response.response }}</p>
+  <form action="{% url 'gpt_sub_response_list' %}" method="get">
+    <input type="submit" value="View GPT Sub Responses">
+  </form>
+  <p><a href="{% url 'home' %}">Go back to Home</a></p>
+</body>

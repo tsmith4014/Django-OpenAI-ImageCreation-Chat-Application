@@ -1,12 +1,13 @@
-<h2>ChatGPT Images</h2>
-{% if image_urls %}
-    {% for url in image_urls %}
-        <a href="{{ url }}"><img src="{{ url }}" alt="Generated Image" /></a>
-        <br /><br />
-    {% endfor %}
-{% endif %}
-<p>Image Prompt: {{ image_prompt_response.prompt }}</p>
-<p><form action="{% url 'gpt_sub_response_list' %}" method="get">
+<!-- image_prompt_response.html -->
+<body style="text-align:center;">
+  <h2>ChatGPT Images</h2>
+  {% for image_url in image_urls %}
+    <a href="{{ image_url }}" target="_blank">
+      <img src="{{ image_url }}" alt="Generated image" style="width:200px;height:200px;">
+    </a>
+  {% endfor %}
+  <form action="{% url 'gpt_sub_response_list' %}" method="get">
     <input type="submit" value="View GPT Sub Responses">
   </form>
-  </p>
+  <p><a href="{% url 'home' %}">Go back to Home</a></p>
+</body>

@@ -6,9 +6,11 @@ class GPTSub(models.Model):
     temperature = models.DecimalField(max_digits=2, decimal_places=1, default=1.0)
     top_p = models.DecimalField(max_digits=3, decimal_places=2, default=0.9)
     model = models.CharField(max_length=255)  
-    num_tokens = models.IntegerField()
     response_name = models.CharField(max_length=255)
     response = models.TextField()
+    tokens_used = models.DecimalField(max_digits=5, decimal_places=0, default=0)
+    prompt_tokens = models.DecimalField(max_digits=5, decimal_places=0, default=0)
+    response_tokens = models.DecimalField(max_digits=5, decimal_places=0, default=0)
 
     def __str__(self):
         return self.prompt
