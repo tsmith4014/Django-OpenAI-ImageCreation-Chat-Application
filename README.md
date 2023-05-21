@@ -101,7 +101,7 @@ Important: Do not include the .env file in the version control to keep your API 
 
 After configuration, you can start the Django development server by navigating to the root directory of the project and running the following command:
 
-```python python manage.py runserver
+```markdownlint python manage.py runserver
 ```
 
 Now you can access the application in your web browser at `http://127.0.0.1:8000/chatgpt/`
@@ -146,10 +146,9 @@ Should you encounter any issues during the setup or operation of the application
 
 You can run the application tests using Django's test runner. In the project root directory, run the following command:
 
-```python python manage.py test chatgpt
+```markdownlint
+python manage.py test chatgpt
 ```
-
-
 
 ## Known Issues and Limitations
 
