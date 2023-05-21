@@ -169,7 +169,7 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-If you have any questions or suggestions, feel free to open an issue on this repository.
+If you have any questions or suggestions, feel free to open an issue on this repository or reachout at chjthomps@gmail.com.
 
 ## Acknowledgements
 
