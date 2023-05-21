@@ -24,37 +24,61 @@ def index(request):
             return redirect('image_prompt')
     return render(request, 'index.html')
 
+    
 
 def handle_gpt_request(request):
     if request.method == 'POST':
         form = GPTRequestForm(request.POST)
         if form.is_valid():
-            gpt_sub = form.save(commit=False)
-            prompt = gpt_sub.prompt
-            temperature = gpt_sub.temperature
-            top_p = gpt_sub.top_p
-            model = gpt_sub.model
-            num_tokens = gpt_sub.num_tokens
-            response_name = gpt_sub.response_name
-            gpt_sub.save()
+            gpt_sub = form.save()
             
             headers = {
                 "Authorization": "Bearer {}".format(my_api_key),
                 "Content-Type": "application/json",
             }
             data = {
-                "prompt": prompt,
-                "temperature": float(temperature),
-                "top_p": float(top_p),
-                "model": model,
-                "max_tokens": int(num_tokens),
+                "prompt": gpt_sub.prompt,
+                "temperature": float(gpt_sub.temperature),
+                "top_p": float(gpt_sub.top_p),
+                "model": gpt_sub.model,
+                "max_tokens": int(gpt_sub.num_tokens),
             }
-
-            gpt_request = GPTSub.objects.create(prompt=prompt, temperature=temperature, top_p=top_p, model=model,response_name=response_name,num_tokens=num_tokens)
-            return redirect('gpt_response', gpt_request.pk)
+            return redirect('gpt_response', gpt_sub.pk)
     else:
         form = GPTRequestForm()
     return render(request, 'gpt_template.html', {'form': form})
+
+
+# def handle_gpt_request(request):
+#     if request.method == 'POST':
+#         form = GPTRequestForm(request.POST)
+#         if form.is_valid():
+#             gpt_sub = form.save(commit=False)
+#             prompt = gpt_sub.prompt
+#             temperature = gpt_sub.temperature
+#             top_p = gpt_sub.top_p
+#             model = gpt_sub.model
+#             num_tokens = gpt_sub.num_tokens
+#             response_name = gpt_sub.response_name
+#             gpt_sub.save()
+            
+#             headers = {
+#                 "Authorization": "Bearer {}".format(my_api_key),
+#                 "Content-Type": "application/json",
+#             }
+#             data = {
+#                 "prompt": prompt,
+#                 "temperature": float(temperature),
+#                 "top_p": float(top_p),
+#                 "model": model,
+#                 "max_tokens": int(num_tokens),
+#             }
+
+#             gpt_request = GPTSub.objects.create(prompt=prompt, temperature=temperature, top_p=top_p, model=model,response_name=response_name,num_tokens=num_tokens)
+#             return redirect('gpt_response', gpt_request.pk)
+#     else:
+#         form = GPTRequestForm()
+#     return render(request, 'gpt_template.html', {'form': form})
 
 
 def handle_gpt_response(request, pk):
