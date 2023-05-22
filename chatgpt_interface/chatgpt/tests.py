@@ -1,3 +1,4 @@
+# tests.py
 from django.test import TestCase, Client
 from django.urls import reverse
 from .models import GPTSub, ImagePrompt
@@ -12,9 +13,12 @@ class TestViews(TestCase):
             prompt='Test Prompt',
             temperature=1.0,
             top_p=0.9,
-            model='text-davinci-002',
-            num_tokens=50,
-            response_name='Test Response'
+            model='gpt-3.5-turbo',
+            response_name='Test Response',
+            response = 'Test Response',
+            tokens_used=100,
+            prompt_tokens=50,
+            response_tokens=50
         )
 
         self.test_image_prompt = ImagePrompt.objects.create(
@@ -48,9 +52,12 @@ class TestViews(TestCase):
             'prompt': 'Test Prompt',
             'temperature': 1.0,
             'top_p': 0.9,
-            'model': 'text-davinci-002',
-            'num_tokens': 50,
-            'response_name': 'Test Response'
+            'model': 'gpt-3.5-turbo',
+            'response_name': 'Test Response',
+            'response': 'Test Response',
+            'tokens_used': 100,
+            'prompt_tokens': 50,
+            'response_tokens': 50
         })
 
         self.assertEquals(response.status_code, 302)
@@ -69,3 +76,32 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 302)
         self.assertEquals(ImagePrompt.objects.count(), 2)
 
+
+# Add these to your TestViews class:
+
+    def test_index_GET(self):
+        response = self.client.get(self.index_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'index.html')
+
+    def test_list_gpt_sub_responses_GET(self):
+        response = self.client.get(self.gpt_sub_responses_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'gpt_sub_response_list.html')
+
+    def test_edit_gpt_sub_response_GET(self):
+        response = self.client.get(self.edit_gpt_sub_response_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'gpt_sub_response_edit.html')
+
+    def test_delete_gpt_sub_response_GET(self):
+        response = self.client.get(self.delete_gpt_sub_response_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'gpt_sub_response_confirm_delete.html')
+
+    @patch('requests.post')
+    def test_handle_image_prompt_response_GET(self, mock_post):
+        mock_post.return_value.json.return_value = {'data': [{'url': 'http://test.url'}]}
+        response = self.client.get(self.image_prompt_response_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'image_prompt_response.html')

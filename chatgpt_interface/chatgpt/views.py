@@ -41,9 +41,6 @@ messages = [
 print(f"{num_tokens_from_messages(messages)} prompt tokens counted.")
 
 
-
-
-
 my_api_key = config('OPENAI_KEY')
 
 
@@ -59,7 +56,8 @@ def index(request):
             return redirect('image_prompt')
     return render(request, 'index.html')
 
-    
+
+
 def handle_gpt_request(request):
     if request.method == 'POST':
         form = GPTRequestForm(request.POST)
@@ -81,6 +79,8 @@ def handle_gpt_request(request):
         form = GPTRequestForm()
     return render(request, 'gpt_template.html', {'form': form})
 
+
+    
 def handle_gpt_response(request, pk):
     gpt_response = GPTSub.objects.get(pk=pk)
     openai.api_key = my_api_key
@@ -168,7 +168,6 @@ def handle_image_prompt_request(request):
     return render(request, 'image_prompt_template.html', {'form': form})
 
 
-
 def handle_image_prompt_response(request, pk):
     image_prompt_response = ImagePrompt.objects.get(pk=pk)
     print(image_prompt_response, 'this is the image_prompt_response')
@@ -200,6 +199,10 @@ def handle_image_prompt_response(request, pk):
 
 
 
+
+
+
+
     #old view for pre gpt-3.5 turbo and gpt-4
 # def handle_gpt_response(request, pk):
 #     gpt_response = GPTSub.objects.get(pk=pk)
@@ -214,3 +217,53 @@ def handle_image_prompt_response(request, pk):
 #     gpt_response.response = response["choices"][0]["text"]
 #     gpt_response.save()
 #     return render(request, 'gpt_response.html', {'gpt_response': gpt_response})
+
+
+
+
+# def loading(request, pk, request_type):
+#     if request_type == 'gpt':
+#         gpt_sub = GPTSub.objects.get(pk=pk)
+
+#         headers = {
+#             "Authorization": "Bearer {}".format(my_api_key),
+#             "Content-Type": "application/json",
+#         }
+#         data = {
+#             "messages": [
+#                 {
+#                     "role": "system",
+#                     "content": "This is a conversation with GPT-3.5-turbo."
+#                 },
+#                 {
+#                     "role": "user",
+#                     "content": gpt_sub.prompt
+#                 }
+#             ],
+#             "temperature": float(gpt_sub.temperature),
+#             "max_tokens": int(gpt_sub.max_tokens)
+#         }
+#         response = requests.post('https://api.openai.com/v1/engines/gpt-3.5-turbo/chat/completions', headers=headers, data=json.dumps(data))
+#         if response.status_code == 200:
+#             gpt_sub.response = response.json()['choices'][0]['message']['content']
+#             gpt_sub.save()
+#             return redirect('gpt_response', gpt_sub.pk)
+        
+#     elif request_type == 'dalle':
+#         image_prompt = ImagePrompt.objects.get(pk=pk)
+#         headers = {
+#             'Content-Type': 'application/json',
+#             'Authorization': f'Bearer {my_api_key}'
+#         }
+#         data = {
+#             'prompt': image_prompt.prompt,
+#             'n': image_prompt.n,
+#             'size': image_prompt.size
+#         }
+#         response = requests.post('https://api.openai.com/v1/engines/dall-e/creations', headers=headers, data=json.dumps(data))
+#         if response.status_code == 200:
+#             image_prompt.response_urls = [item['url'] for item in response.json()['data']]
+#             image_prompt.save()
+#             return redirect('image_prompt_response', image_prompt.pk)
+
+#     return render(request, 'loading.html')  # Add your loading page here

@@ -11,4 +11,5 @@ urlpatterns = [
     path('gpt_sub_responses/', views.list_gpt_sub_responses, name='gpt_sub_response_list'),
     path('gpt_sub_responses/<int:pk>/edit/', views.edit_gpt_sub_response, name='gpt_sub_response_edit'),
     path('gpt_sub_responses/<int:pk>/delete/', views.delete_gpt_sub_response, name='gpt_sub_response_delete'),
+
 ]

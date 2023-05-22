@@ -1,6 +1,7 @@
 # Forms
 from django import forms
 from .models import GPTSub
+from .models import ImagePrompt
 
 DEFAULT_TEMPERATURE = 1.0
 DEFAULT_TOP_P = 0.9
@@ -54,12 +55,15 @@ class EditGPTSubResponseForm(forms.ModelForm):
         model = GPTSub
         fields = ['response', 'prompt']
 
-class ImagePromptForm(forms.Form):
-    prompt = forms.CharField(widget=forms.Textarea)
-    n = forms.IntegerField()
-    size = forms.CharField(max_length=9, initial='1024x1024')
-    response_format = forms.CharField(max_length=12, initial='url')
+class ImagePromptForm(forms.ModelForm):
+    class Meta:
+        model = ImagePrompt
+        fields = ['prompt', 'n', 'size', 'response_format']
 
 
 
-
+# class ImagePromptForm(forms.Form):
+#     prompt = forms.CharField(widget=forms.Textarea)
+#     n = forms.IntegerField()
+#     size = forms.CharField(max_length=9, initial='1024x1024')
+#     response_format = forms.CharField(max_length=12, initial='url')
