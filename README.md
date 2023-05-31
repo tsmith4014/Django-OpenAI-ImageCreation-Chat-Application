@@ -25,8 +25,6 @@ This is a Django-based application designed to interact with OpenAI's GPT models
 - OpenAI Python library
 - Requests library
 
-## Getting Started
-
 ## Command Line Navigation Instructions
 
 This "nested" README provides a brief guide on how to navigate directories using the command line interface for both Unix (MacOS/Linux) and PowerShell (Windows).
@@ -102,8 +100,7 @@ This "nested" README provides a brief guide on how to navigate directories using
     Replace `[directory-name]` with the name of the directory you want to remove.
 
 
-
-
+# Getting Started
 
 ## Installation
 
