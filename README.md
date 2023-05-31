@@ -39,7 +39,7 @@ This is a Django-based application designed to interact with OpenAI's GPT models
    - On Unix or MacOS:
 
     ```markdownlint
-    cd "Django-OpenAI-ImageCreation-Chat-Application"
+    cd Django-OpenAI-ImageCreation-Chat-Application
     ```
     
    - On Windows:
