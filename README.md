@@ -104,9 +104,11 @@ This file should contain key-value pairs representing the environment variables:
 Remember to replace your_openai_key with your actual OpenAI API key.
 Important: Do not include the .env file in the version control to keep your API key secure.
 
-## Migrations
+## Migrations and Running the Server
 
 Django uses a migration system for tracking changes to your models and applying them to your database schema. Migrations are stored as an on-disk format, referred to here as "migration files". These files are actually just normal Python files with an agreed-upon object layout, written in a declarative style.
+
+Start the Django development server by navigating to the root directory of the project "chatgpt_interface" and running the following commands:
 
 1. Make Migrations 
 ```markdownlint
@@ -117,10 +119,8 @@ python manage.py makemigrations
 ```markdownlint
 python manage.py migrate
 ```
-## Running the Server
 
-After configuration, you can start the Django development server by navigating to the root directory of the project "chatgpt_interface" and running the following command:
-
+3. Start the Server
 ```markdownlint
 python manage.py runserver
 ```
