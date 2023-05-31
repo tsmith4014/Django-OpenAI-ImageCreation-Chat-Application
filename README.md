@@ -39,13 +39,13 @@ This is a Django-based application designed to interact with OpenAI's GPT models
    - On Unix or MacOS:
 
     ```markdownlint
-    cd <Django-OpenAI-ImageCreation-Chat-Application>
+    cd "Django-OpenAI-ImageCreation-Chat-Application"
     ```
     
    - On Windows:
    
     ```markdownlint
-     Set-Location -Path <Django-OpenAI-ImageCreation-Chat-Application>
+     Set-Location -Path "Django-OpenAI-ImageCreation-Chat-Application"
     ```
 
 3. Next step we create a virtual environment:
