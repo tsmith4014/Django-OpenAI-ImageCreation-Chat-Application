@@ -27,6 +27,82 @@ This is a Django-based application designed to interact with OpenAI's GPT models
 
 ## Getting Started
 
+# Command Line Navigation Instructions
+
+This "nested" README provides a brief guide on how to navigate directories using the command line interface for both Unix (MacOS/Linux) and PowerShell (Windows).
+
+## Unix (MacOS/Linux)
+
+1. **List the contents of the current directory:**
+    ```bash
+    ls
+    ```
+
+2. **Change to a different directory:**
+    ```bash
+    cd [directory name]
+    ```
+    Replace `[directory name]` with the name of the directory you want to navigate to.
+
+3. **Move back one directory:**
+    ```bash
+    cd ..
+    ```
+
+4. **Go to the home directory:**
+    ```bash
+    cd ~
+    ```
+
+5. **Create a new directory:**
+    ```bash
+    mkdir [new-directory]
+    ```
+    Replace `[new-directory]` with the name of the new directory you want to create.
+
+6. **Delete a directory:**
+    ```bash
+    rmdir [directory-name]
+    ```
+    Replace `[directory-name]` with the name of the directory you want to remove.
+
+## PowerShell (Windows)
+
+1. **List the contents of the current directory:**
+    ```powershell
+    Get-ChildItem
+    ```
+
+2. **Change to a different directory:**
+    ```powershell
+    Set-Location [directory name]
+    ```
+    Replace `[directory name]` with the name of the directory you want to navigate to.
+
+3. **Move back one directory:**
+    ```powershell
+    Set-Location ..
+    ```
+
+4. **Go to the home directory:**
+    ```powershell
+    Set-Location ~
+    ```
+
+5. **Create a new directory:**
+    ```powershell
+    New-Item -ItemType directory -Path .\[new-directory]
+    ```
+    Replace `[new-directory]` with the name of the new directory you want to create.
+
+6. **Delete a directory:**
+    ```powershell
+    Remove-Item [directory-name]
+    ```
+    Replace `[directory-name]` with the name of the directory you want to remove.
+
+
+
 ## Installation
 
 1. Create a new folder/directory on your machine and clone this repository :
@@ -178,6 +254,87 @@ You can run the application tests using Django's test runner. In the project roo
 ```markdownlint
 python manage.py test chatgpt
 ```
+
+
+# Additional Command Line Instructions
+
+This README extends the previous guide with more command line instructions for Unix (MacOS/Linux) and PowerShell (Windows).
+
+## Unix (MacOS/Linux)
+
+1. **Print the current directory:**
+    ```bash
+    pwd
+    ```
+
+2. **Create a new file:**
+    ```bash
+    touch [file-name]
+    ```
+    Replace `[file-name]` with the name of the file you want to create.
+
+3. **Open a file using the default editor:**
+    ```bash
+    open [file-name]
+    ```
+    Replace `[file-name]` with the name of the file you want to open.
+
+4. **Show the top of a file's contents:**
+    ```bash
+    head [file-name]
+    ```
+    Replace `[file-name]` with the name of the file.
+
+5. **Show the bottom of a file's contents:**
+    ```bash
+    tail [file-name]
+    ```
+    Replace `[file-name]` with the name of the file.
+
+6. **Search for a pattern in a file:**
+    ```bash
+    grep [pattern] [file-name]
+    ```
+    Replace `[pattern]` with the pattern you want to search for and `[file-name]` with the name of the file.
+
+## PowerShell (Windows)
+
+1. **Print the current directory:**
+    ```powershell
+    Get-Location
+    ```
+
+2. **Create a new file:**
+    ```powershell
+    New-Item [file-name]
+    ```
+    Replace `[file-name]` with the name of the file you want to create.
+
+3. **Open a file using the default editor:**
+    ```powershell
+    Invoke-Item [file-name]
+    ```
+    Replace `[file-name]` with the name of the file you want to open.
+
+4. **Show the top of a file's contents:**
+    ```powershell
+    Get-Content [file-name] -Head 10
+    ```
+    Replace `[file-name]` with the name of the file.
+
+5. **Show the bottom of a file's contents:**
+    ```powershell
+    Get-Content [file-name] -Tail 10
+    ```
+    Replace `[file-name]` with the name of the file.
+
+6. **Search for a pattern in a file:**
+    ```powershell
+    Select-String -Path [file-name] -Pattern [pattern]
+    ```
+    Replace `[pattern]` with the pattern you want to search for and `[file-name]` with the name of the file.
+
+
 
 ## Known Issues and Limitations
 
