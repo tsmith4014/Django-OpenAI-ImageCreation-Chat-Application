@@ -97,11 +97,7 @@ For Windows (in PowerShell):
 $env:OPENAI_KEY="your_openai_key"
 ```
 
-You can also use a .env file in the root directory to set the environment variables. 
-This file should contain key-value pairs representing the environment variables:
-    OPENAI_KEY=your_openai_key
-
-***Django Secret Sey!
+***Django Secret Key!
 In the settings.py file that in located at this level Django-OpenAI-ImageCreation-Chat-Application\chatgpt_interface\chatgpt_interface\settings.py must be addressed : SECRET_KEY = config('DJANGO_SECRET_KEY') 
 It is recommed this be set in your .env and the DJANGO_SECRET_KEY can literally be a made up string of your choosing.  Another less secure workout is to just change this in settings.py from SECRET_KEY = config('DJANGO_SECRET_KEY') to SECRET_KEY = "kasljdflk8927345oasdjkfh9823745t"  (just some random key) but this is not recommend.
 
