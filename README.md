@@ -35,7 +35,7 @@ This is a Django-based application designed to interact with OpenAI's GPT models
     git clone https://github.com/tsmith4014/Django-OpenAI-ImageCreation-Chat-Application.git
     ```
 
-2. Navigate into the project directory "Django-OpenAI-ImageCreation-Chat-Application":\
+2. Navigate into the project directory "Django-OpenAI-ImageCreation-Chat-Application" this takes some knowledge of command line prompts but a key has been included with the required, and then some, commands.  You know you are in the correct directory when you do ls (mac/unix) or Get-ChildItem (Windows) and you see chatgpt_interface, .gitignore, README.md, and the requirements.txt we will use to install our dependincies.  
    - On Unix or MacOS:
 
     ```markdownlint
@@ -104,9 +104,22 @@ This file should contain key-value pairs representing the environment variables:
 Remember to replace your_openai_key with your actual OpenAI API key.
 Important: Do not include the .env file in the version control to keep your API key secure.
 
+## Migrations
+
+Django uses a migration system for tracking changes to your models and applying them to your database schema. Migrations are stored as an on-disk format, referred to here as "migration files". These files are actually just normal Python files with an agreed-upon object layout, written in a declarative style.
+
+1. Make Migrations 
+```markdownlint
+python manage.py makemigrations
+```
+
+2. Make Migrations 
+```markdownlint
+python manage.py migrate
+```
 ## Running the Server
 
-After configuration, you can start the Django development server by navigating to the root directory of the project and running the following command:
+After configuration, you can start the Django development server by navigating to the root directory of the project "chatgpt_interface" and running the following command:
 
 ```markdownlint
 python manage.py runserver
