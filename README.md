@@ -1,4 +1,4 @@
-# Django OpenAI Chat Application
+# Django OpenAI Chat Application - VSCode installation instructions  
 
 
 ![Python Version](https://img.shields.io/badge/Python-3.6+-blue.svg)
@@ -29,19 +29,26 @@ This is a Django-based application designed to interact with OpenAI's GPT models
 
 ## Installation
 
-1. Clone this repository:
+1. Create a new folder/directory on your machine and clone this repository :
 
     ```markdownlint
-    git clone https://github.com/tsmith4014/chatgpt_interface.git
+    git clone https://github.com/tsmith4014/Django-OpenAI-ImageCreation-Chat-Application.git
     ```
 
-2. Navigate into the project directory:
+2. Navigate into the project directory "Django-OpenAI-ImageCreation-Chat-Application":\
+   - On Unix or MacOS:
 
     ```markdownlint
-    cd <chatgpt_interface.git>
+    cd <Django-OpenAI-ImageCreation-Chat-Application>
+    ```
+    
+   - On Windows:
+   
+    ```markdownlint
+     Set-Location -Path <Django-OpenAI-ImageCreation-Chat-Application>
     ```
 
-3. It's recommended to create a virtual environment:
+3. Next step we create a virtual environment:
 
     ```markdownlint
     python -m venv venv
