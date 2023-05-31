@@ -75,7 +75,7 @@ This is a Django-based application designed to interact with OpenAI's GPT models
 
 ## Configuration
 
-This project requires an OpenAI API key to function. It should be provided through an environment variable named `OPENAI_KEY`.
+This project requires an OpenAI API key to function, please go here https://platform.openai.com/docs/api-reference/introduction if you do not have a key and note this is a paid API key but its pretty cheap to run pricing here https://openai.com/pricing. It should be provided through an environment variable named `OPENAI_KEY`.
 
 If you are running the project locally, you can set the environment variable in your terminal:
 
@@ -101,8 +101,20 @@ You can also use a .env file in the root directory to set the environment variab
 This file should contain key-value pairs representing the environment variables:
     OPENAI_KEY=your_openai_key
 
-Remember to replace your_openai_key with your actual OpenAI API key.
-Important: Do not include the .env file in the version control to keep your API key secure.
+***Django Secret Sey!
+In the settings.py file that in located at this level Django-OpenAI-ImageCreation-Chat-Application\chatgpt_interface\chatgpt_interface\settings.py must be addressed : SECRET_KEY = config('DJANGO_SECRET_KEY') 
+It is recommed this be set in your .env and the DJANGO_SECRET_KEY can literally be a made up string of your choosing.  Another less secure workout is to just change this in settings.py from SECRET_KEY = config('DJANGO_SECRET_KEY') to SECRET_KEY = "kasljdflk8927345oasdjkfh9823745t"  (just some random key) but this is not recommend.
+
+Using a .env (enviroment file) to store keys is easy, at the Django-OpenAI-ImageCreation-Chat-Application project level and at the same level as the .gitignore, requirements.txt create a new file and call it .env, you can tell a .env file because it looks like a little machine cog.  Inside the .env create 2 variables like this: 
+
+      ```markdownlint
+      DJANGO_SECRET_KEY = "asdfasdfsds233532454" 
+      OPENAI_KEY = "asdfasdf"
+      ```
+
+Remember to replace your_openai_key and DJANGO_SECRET_KEY with your keys and remember the DJANGO_SECRET_KEY can be anything you want but the OpenAI access key must be a valid key and please note this will cost money for each request that is made.
+
+Important: Do not include the .env file in the version control to keep your API key secure, it has been added to the .gitignore for your safety, do not remove it.
 
 ## Migrations and Running the Server
 
