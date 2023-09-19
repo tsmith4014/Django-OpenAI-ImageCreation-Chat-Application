@@ -1,4 +1,4 @@
-# Django OpenAI Chat Application
+# Django OpenAI Chat Application - VSCode installation instructions  
 
 
 ![Python Version](https://img.shields.io/badge/Python-3.6+-blue.svg)
@@ -25,23 +25,105 @@ This is a Django-based application designed to interact with OpenAI's GPT models
 - OpenAI Python library
 - Requests library
 
-## Getting Started
+## Command Line Navigation Instructions
+
+This "nested" README provides a brief guide on how to navigate directories using the command line interface for both Unix (MacOS/Linux) and PowerShell (Windows).
+
+## Unix (MacOS/Linux)
+
+1. **List the contents of the current directory:**
+    ```bash
+    ls
+    ```
+
+2. **Change to a different directory:**
+    ```bash
+    cd [directory name]
+    ```
+    Replace `[directory name]` with the name of the directory you want to navigate to.
+
+3. **Move back one directory:**
+    ```bash
+    cd ..
+    ```
+
+4. **Go to the home directory:**
+    ```bash
+    cd ~
+    ```
+
+5. **Create a new directory:**
+    ```bash
+    mkdir [new-directory]
+    ```
+    Replace `[new-directory]` with the name of the new directory you want to create.
+
+6. **Delete a directory:**
+    ```bash
+    rmdir [directory-name]
+    ```
+    Replace `[directory-name]` with the name of the directory you want to remove.
+
+## PowerShell (Windows)
+
+1. **List the contents of the current directory:**
+    ```powershell
+    Get-ChildItem
+    ```
+
+2. **Change to a different directory:**
+    ```powershell
+    Set-Location [directory name]
+    ```
+    Replace `[directory name]` with the name of the directory you want to navigate to.
+
+3. **Move back one directory:**
+    ```powershell
+    Set-Location ..
+    ```
+
+4. **Go to the home directory:**
+    ```powershell
+    Set-Location ~
+    ```
+
+5. **Create a new directory:**
+    ```powershell
+    New-Item -ItemType directory -Path .\[new-directory]
+    ```
+    Replace `[new-directory]` with the name of the new directory you want to create.
+
+6. **Delete a directory:**
+    ```powershell
+    Remove-Item [directory-name]
+    ```
+    Replace `[directory-name]` with the name of the directory you want to remove.
+
+
+# Getting Started
 
 ## Installation
 
-1. Clone this repository:
+1. Create a new folder/directory on your machine and clone this repository :
 
     ```markdownlint
-    git clone https://github.com/tsmith4014/chatgpt_interface.git
+    git clone https://github.com/tsmith4014/Django-OpenAI-ImageCreation-Chat-Application.git
     ```
 
-2. Navigate into the project directory:
+2. Navigate into the project directory "Django-OpenAI-ImageCreation-Chat-Application" this takes some knowledge of command line prompts but a key has been included with the required, and then some, commands.  You know you are in the correct directory when you do ls (mac/unix) or Get-ChildItem (Windows) and you see chatgpt_interface, .gitignore, README.md, and the requirements.txt we will use to install our dependincies.  
+   - On Unix or MacOS:
 
     ```markdownlint
-    cd <chatgpt_interface.git>
+    cd Django-OpenAI-ImageCreation-Chat-Application
+    ```
+    
+   - On Windows:
+   
+    ```markdownlint
+     Set-Location -Path "Django-OpenAI-ImageCreation-Chat-Application"
     ```
 
-3. It's recommended to create a virtual environment:
+3. Next step we create a virtual environment:
 
     ```markdownlint
     python -m venv venv
@@ -68,7 +150,7 @@ This is a Django-based application designed to interact with OpenAI's GPT models
 
 ## Configuration
 
-This project requires an OpenAI API key to function. It should be provided through an environment variable named `OPENAI_KEY`.
+This project requires an OpenAI API key to function, please go here https://platform.openai.com/docs/api-reference/introduction if you do not have a key and note this is a paid API key but its pretty cheap to run pricing here https://openai.com/pricing. It should be provided through an environment variable named `OPENAI_KEY`.
 
 If you are running the project locally, you can set the environment variable in your terminal:
 
@@ -90,17 +172,38 @@ For Windows (in PowerShell):
 $env:OPENAI_KEY="your_openai_key"
 ```
 
-You can also use a .env file in the root directory to set the environment variables. 
-This file should contain key-value pairs representing the environment variables:
-    OPENAI_KEY=your_openai_key
+***Django Secret Key!
+In the settings.py file that in located at this level Django-OpenAI-ImageCreation-Chat-Application\chatgpt_interface\chatgpt_interface\settings.py must be addressed : SECRET_KEY = config('DJANGO_SECRET_KEY') 
+It is recommed this be set in your .env and the DJANGO_SECRET_KEY can literally be a made up string of your choosing.  Another less secure workout is to just change this in settings.py from SECRET_KEY = config('DJANGO_SECRET_KEY') to SECRET_KEY = "kasljdflk8927345oasdjkfh9823745t"  (just some random key) but this is not recommend.
 
-Remember to replace your_openai_key with your actual OpenAI API key.
-Important: Do not include the .env file in the version control to keep your API key secure.
+Using a .env (enviroment file) to store keys is easy, at the Django-OpenAI-ImageCreation-Chat-Application project level and at the same level as the .gitignore, requirements.txt create a new file and call it .env, you can tell a .env file because it looks like a little machine cog.  Inside the .env create 2 variables like this: 
 
-## Running the Server
+      ```markdownlint
+      DJANGO_SECRET_KEY = "asdfasdfsds233532454" 
+      OPENAI_KEY = "asdfasdf"
+      ```
 
-After configuration, you can start the Django development server by navigating to the root directory of the project and running the following command:
+Remember to replace your_openai_key and DJANGO_SECRET_KEY with your keys and remember the DJANGO_SECRET_KEY can be anything you want but the OpenAI access key must be a valid key and please note this will cost money for each request that is made.
 
+Important: Do not include the .env file in the version control to keep your API key secure, it has been added to the .gitignore for your safety, do not remove it.
+
+## Migrations and Running the Server
+
+Django uses a migration system for tracking changes to your models and applying them to your database schema. Migrations are stored as an on-disk format, referred to here as "migration files". These files are actually just normal Python files with an agreed-upon object layout, written in a declarative style.
+
+Start the Django development server by navigating to the root directory of the project "chatgpt_interface" and running the following commands:
+
+1. Make Migrations 
+```markdownlint
+python manage.py makemigrations
+```
+
+2. Make Migrations 
+```markdownlint
+python manage.py migrate
+```
+
+3. Start the Server
 ```markdownlint
 python manage.py runserver
 ```
@@ -150,6 +253,87 @@ You can run the application tests using Django's test runner. In the project roo
 ```markdownlint
 python manage.py test chatgpt
 ```
+
+
+# Additional Command Line Instructions
+
+This README extends the previous guide with more command line instructions for Unix (MacOS/Linux) and PowerShell (Windows).
+
+## Unix (MacOS/Linux)
+
+1. **Print the current directory:**
+    ```bash
+    pwd
+    ```
+
+2. **Create a new file:**
+    ```bash
+    touch [file-name]
+    ```
+    Replace `[file-name]` with the name of the file you want to create.
+
+3. **Open a file using the default editor:**
+    ```bash
+    open [file-name]
+    ```
+    Replace `[file-name]` with the name of the file you want to open.
+
+4. **Show the top of a file's contents:**
+    ```bash
+    head [file-name]
+    ```
+    Replace `[file-name]` with the name of the file.
+
+5. **Show the bottom of a file's contents:**
+    ```bash
+    tail [file-name]
+    ```
+    Replace `[file-name]` with the name of the file.
+
+6. **Search for a pattern in a file:**
+    ```bash
+    grep [pattern] [file-name]
+    ```
+    Replace `[pattern]` with the pattern you want to search for and `[file-name]` with the name of the file.
+
+## PowerShell (Windows)
+
+1. **Print the current directory:**
+    ```powershell
+    Get-Location
+    ```
+
+2. **Create a new file:**
+    ```powershell
+    New-Item [file-name]
+    ```
+    Replace `[file-name]` with the name of the file you want to create.
+
+3. **Open a file using the default editor:**
+    ```powershell
+    Invoke-Item [file-name]
+    ```
+    Replace `[file-name]` with the name of the file you want to open.
+
+4. **Show the top of a file's contents:**
+    ```powershell
+    Get-Content [file-name] -Head 10
+    ```
+    Replace `[file-name]` with the name of the file.
+
+5. **Show the bottom of a file's contents:**
+    ```powershell
+    Get-Content [file-name] -Tail 10
+    ```
+    Replace `[file-name]` with the name of the file.
+
+6. **Search for a pattern in a file:**
+    ```powershell
+    Select-String -Path [file-name] -Pattern [pattern]
+    ```
+    Replace `[pattern]` with the pattern you want to search for and `[file-name]` with the name of the file.
+
+
 
 ## Known Issues and Limitations
 
