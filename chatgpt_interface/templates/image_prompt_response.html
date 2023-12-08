@@ -1,13 +1,47 @@
-<!-- image_prompt_response.html -->
-<body style="text-align:center;">
-  <h2>ChatGPT Images</h2>
-  {% for image_url in image_urls %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Prompt Response</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 20px;
+      }
+      img {
+        max-width: 500px;
+        height: auto;
+        margin: 20px;
+        border-radius: 10px;
+      }
+      a {
+        text-decoration: none;
+        color: #333;
+      }
+      .back-link {
+        display: inline-block;
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Generated Images</h1>
+    {% for image_url in image_urls %}
     <a href="{{ image_url }}" target="_blank">
-      <img src="{{ image_url }}" alt="Generated image" style="width:200px;height:200px;">
+      <img src="{{ image_url }}" alt="Generated image" />
     </a>
-  {% endfor %}
-  <form action="{% url 'gpt_sub_response_list' %}" method="get">
-    <input type="submit" value="View GPT Sub Responses">
-  </form>
-  <p><a href="{% url 'home' %}">Go back to Home</a></p>
-</body>
+    {% empty %}
+    <p>No images to display.</p>
+    {% endfor %}
+    <a href="{% url 'image_prompt_request' %}" class="back-link">Go Back</a>
+  </body>
+</html>

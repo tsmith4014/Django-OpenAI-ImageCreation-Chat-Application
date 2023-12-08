@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from decouple import config
 SECRET_KEY = config('DJANGO_SECRET_KEY')
+OPENAI_KEY=config('OPENAI_KEY')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

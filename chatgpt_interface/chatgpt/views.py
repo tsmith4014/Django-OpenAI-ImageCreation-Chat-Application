@@ -149,10 +149,30 @@ def delete_gpt_sub_response(request, pk):
         return redirect('gpt_sub_response_list')
     return render(request, 'gpt_sub_response_confirm_delete.html', {'gpt_sub_response': gpt_sub_response})
 
+#############################New DALL-E views below#############################################
 
-#############################DALL-E views below#############################################
+# Function to call the DALL-E API
+def generate_image(prompt, model='dall-e-3', n=1, size='1024x1024', quality='standard', style='vivid'):
+    my_api_key = config('OPENAI_KEY')  # Retrieve API key from Django settings
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {my_api_key}'
+    }
+    data = {
+        'prompt': prompt,
+        'model': model,
+        'n': n,
+        'size': size,
+        'quality': quality,
+        'style': style
+    }
+    response = requests.post('https://api.openai.com/v1/images/generations', headers=headers, data=json.dumps(data))
+    print(response.status_code)
+    print(response.json())
+    return response.json()
+    return response.json()
 
-
+# View to handle image prompt request
 def handle_image_prompt_request(request):
     if request.method == 'POST':
         form = ImagePromptForm(request.POST)
@@ -161,38 +181,33 @@ def handle_image_prompt_request(request):
             n = form.cleaned_data['n']
             size = form.cleaned_data['size']
             response_format = form.cleaned_data['response_format']
-            image_prompt = ImagePrompt.objects.create(prompt=prompt, n=n, size=size, response_format=response_format)
+            model = form.cleaned_data.get('model', 'dall-e-3')
+            quality = form.cleaned_data.get('quality', 'standard')
+            style = form.cleaned_data.get('style', 'vivid')
+            image_prompt = ImagePrompt.objects.create(
+                prompt=prompt, n=n, size=size, response_format=response_format,
+                model=model, quality=quality, style=style
+            )
             return redirect('image_prompt_response', image_prompt.pk)
     else:
         form = ImagePromptForm()
     return render(request, 'image_prompt_template.html', {'form': form})
 
-
+# View to handle image prompt response
 def handle_image_prompt_response(request, pk):
-    image_prompt_response = ImagePrompt.objects.get(pk=pk)
-    print(image_prompt_response, 'this is the image_prompt_response')
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': f'Bearer {my_api_key}'
-    }
+    image_prompt_response = get_object_or_404(ImagePrompt, pk=pk)
+    response_data = generate_image(
+        prompt=image_prompt_response.prompt, 
+        model=image_prompt_response.model, 
+        n=image_prompt_response.n, 
+        size=image_prompt_response.size, 
+        quality=image_prompt_response.quality, 
+        style=image_prompt_response.style
+    )
 
-    data = {
-        'prompt': image_prompt_response.prompt,
-        'n': image_prompt_response.n,
-        'size': image_prompt_response.size
-    }
-
-    response = requests.post('https://api.openai.com/v1/images/generations', headers=headers, data=json.dumps(data))
-    print(f"Status code: {response.status_code}")  # Add this line to debug status code
-    response_data = response.json()
-    print(f"Response data: {response_data}")  # Add this line to debug response data
-
-    try:
-        image_urls = [item['url'] for item in response_data['data']]
-    except KeyError:  # Catch KeyError if 'data' or 'url' are not present in the response
-        image_urls = []
-
-    return render(request, 'image_prompt_response.html', {'image_prompt_response': image_prompt_response, 'image_urls': image_urls})
-    response_data = response.json()
-    image_urls = [item['url'] for item in response_data['data']]
-    return render(request, 'image_prompt_response.html', {'image_prompt_response': image_prompt_response, 'image_urls': image_urls})
+    image_urls = [item['url'] for item in response_data.get('data', [])] if response_data else []
+    print(image_urls)
+    return render(request, 'image_prompt_response.html', {
+        'image_prompt_response': image_prompt_response,
+        'image_urls': image_urls
+    })
