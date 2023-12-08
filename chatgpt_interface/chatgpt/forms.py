@@ -55,10 +55,23 @@ class EditGPTSubResponseForm(forms.ModelForm):
         model = GPTSub
         fields = ['response', 'prompt']
 
+
+
 class ImagePromptForm(forms.ModelForm):
     class Meta:
         model = ImagePrompt
-        fields = ['prompt', 'n', 'size', 'response_format']
+        fields = ['prompt', 'n', 'size', 'response_format', 'model', 'quality', 'style']  # Include new fields
+
+
+
+
+
+
+#old version below
+# class ImagePromptForm(forms.ModelForm):
+#     class Meta:
+#         model = ImagePrompt
+#         fields = ['prompt', 'n', 'size', 'response_format']
 
 
 

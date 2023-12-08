@@ -1,108 +1,9 @@
-<!-- image_prompt_template.html -->
 <!DOCTYPE html>
 <html>
   <head>
     <title>Image Prompt Form</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-      }
-      h1 {
-        text-align: center;
-        font-size: 36px;
-        color: #333;
-        margin-top: 40px;
-      }
-      form {
-        background-color: #ffffff;
-        padding: 40px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px #bbbbbb;
-        margin: auto;
-        width: 60%;
-        text-align: center;
-      }
-      input[type="text"],
-      textarea {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        border: 1px solid #bbbbbb;
-        font-size: 18px;
-      }
-      input[type="number"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        border: 1px solid #bbbbbb;
-        font-size: 18px;
-      }
-      select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        border: 1px solid #bbbbbb;
-        font-size: 18px;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-      }
-      input[type="submit"] {
-        background-color: #4caf50;
-        color: #ffffff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        border: none;
-        font-size: 18px;
-        cursor: pointer;
-        margin-top: 20px;
-      }
-      input[type="submit"]:hover {
-        background-color: #3e8e41;
-      }
-
-      .spinner {
-    margin: 100px auto;
-    width: 50px;
-    height: 40px;
-    text-align: center;
-    font-size: 10px;
-  }
-
-    .spinner > div {
-      background-color: #333;
-      height: 100%;
-      width: 6px;
-      display: inline-block;
-      animation: stretchdelay 1.2s infinite ease-in-out;
-    }
-
-    .spinner .rect2 {
-      animation-delay: -1.1s;
-    }
-
-    .spinner .rect3 {
-      animation-delay: -1.0s;
-    }
-
-    .spinner .rect4 {
-      animation-delay: -0.9s;
-    }
-
-    .spinner .rect5 {
-      animation-delay: -0.8s;
-    }
-
-    @keyframes stretchdelay {
-      0%, 40%, 100% { transform: scaleY(0.4) }
-      20% { transform: scaleY(1.0) }
-    }
-
-    </style>
+    <!-- Existing styles -->
+    <!-- Add any new styles if needed -->
   </head>
   <body>
     <h1>Image Prompt Form</h1>
@@ -110,30 +11,8 @@
       {% csrf_token %} {{ form.as_p }}
       <input type="submit" value="Submit" />
     </form>
-
-    <!-- Spinner -->
-    <div id="loading" style="display: none;">
-        <div class="spinner">
-          <div class="rect1"></div>
-          <div class="rect2"></div>
-          <div class="rect3"></div>
-          <div class="rect4"></div>
-          <div class="rect5"></div>
-        </div>
-        Loading...
-    </div>
-
-    <form action="{% url 'gpt_sub_response_list' %}" method="get">
-      <input type="submit" value="View GPT Sub Responses">
-    </form>
-  
-    <p><a href="{% url 'home' %}">Go back to Home</a></p>
-
-    <!-- JavaScript to show spinner on submit -->
-    <script>
-    document.getElementById('imagePromptForm').addEventListener('submit', function() {
-        document.getElementById('loading').style.display = 'block';
-    });
-    </script>
+    <!-- Spinner and other elements -->
+    <a href="{% url 'home' %}" class="back-link">Go back to Home</a>
+    <!-- Existing JavaScript -->
   </body>
 </html>

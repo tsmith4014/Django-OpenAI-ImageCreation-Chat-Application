@@ -1,31 +1,77 @@
-<!-- 
-index.html -->
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>DALL-E Image Generator</title>
     <style>
-      .center {
+      body {
+        font-family: "Arial", sans-serif;
+        background-image: url("{% static 'dalleapp.png' %}");
+        background-size: cover;
+        margin: 0;
+        padding: 0;
         display: flex;
-        justify-content: center;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
+        height: 100vh;
+        color: #333;
+      }
+      .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         text-align: center;
+      }
+      .btn,
+      .music-button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 18px;
+        display: inline-block;
+      }
+      .btn:hover,
+      .music-button:hover {
+        background-color: #45a049;
+      }
+      .music-button {
+        background-color: #f44336; /* Different color for the music button */
       }
     </style>
   </head>
-  <body class="center">
-    <h1>GPT-3 API Request</h1>
-    <p>Please select your request type:</p>
-    <div>
-      <a href="{% url 'gpt_request' %}" class="btn btn-primary">GPT Sub</a>
-      <a href="{% url 'image_prompt_request' %}" class="btn btn-primary"
-        >Image Prompt</a>
+  <body>
+    <div class="container">
+      <h1>DALL-E Image Generator</h1>
+      <p>Select your request type:</p>
+      <div>
+        <a href="{% url 'gpt_request' %}" class="btn">ChadGPT Model</a>
+        <a href="{% url 'image_prompt_request' %}" class="btn"
+          >Dall-E Image Creation</a
+        >
+      </div>
+      <form action="{% url 'gpt_sub_response_list' %}" method="get">
+        <input
+          type="submit"
+          class="btn"
+          value="View ChatGPT Submission/Response Database"
+        />
+      </form>
+      <!-- Embed radio player using iframe -->
+      <iframe
+        src="https://tunein.com/embed/player/s35204/"
+        width="300"
+        height="150"
+        frameborder="0"
+      ></iframe>
     </div>
-    <form action="{% url 'gpt_sub_response_list' %}" method="get">
-      <input type="submit" value="View GPT Sub Responses">
-    </form>
   </body>
 </html>
