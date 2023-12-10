@@ -1,18 +1,164 @@
+<!-- image_prompt_template.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <title>Image Prompt Form</title>
-    <!-- Existing styles -->
-    <!-- Add any new styles if needed -->
+    <style>
+      body {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url("{% static 'marswar.png' %}"); /* Replace with the actual path to your image */
+        background-size: cover;
+        background-position: center;
+      }
+
+      .container {
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* Semi-transparent white for readability */
+        padding: 20px;
+        border-radius: 10px;
+        display: inline-block;
+        margin-top: 20px;
+      }
+
+      form {
+        background-color: #f2f2f2;
+        padding: 20px;
+        margin-top: 20px;
+        display: inline-block;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label,
+      select,
+      input,
+      textarea {
+        display: block;
+        margin: 10px 0;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      .spinner {
+        margin: 100px auto;
+        width: 50px;
+        height: 40px;
+        text-align: center;
+        font-size: 10px;
+      }
+
+      .spinner > div {
+        background-color: #333;
+        height: 100%;
+        width: 6px;
+        display: inline-block;
+        animation: stretchdelay 1.2s infinite ease-in-out;
+      }
+
+      @keyframes stretchdelay {
+        0%,
+        40%,
+        100% {
+          transform: scaleY(0.4);
+        }
+        20% {
+          transform: scaleY(1);
+        }
+      }
+
+      a {
+        color: #333;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
     <h1>Image Prompt Form</h1>
     <form id="imagePromptForm" method="post">
-      {% csrf_token %} {{ form.as_p }}
+      {% csrf_token %}
+
+      <label for="prompt">Image Description:</label>
+      <textarea id="prompt" name="prompt" maxlength="4000" required></textarea>
+
+      <label for="model">Model:</label>
+      <select id="model" name="model">
+        <option value="dall-e-2">DALL-E 2</option>
+        <option value="dall-e-3" selected>DALL-E 3</option>
+      </select>
+
+      <label for="n">Number of Images:</label>
+      <input type="number" id="n" name="n" min="1" max="10" value="1" />
+
+      <label for="quality">Quality:</label>
+      <select id="quality" name="quality">
+        <option value="standard" selected>Standard</option>
+        <option value="hd">HD</option>
+      </select>
+
+      <label for="response_format">Response Format:</label>
+      <select id="response_format" name="response_format">
+        <option value="url" selected>URL</option>
+        <option value="b64_json">Base64 JSON</option>
+      </select>
+
+      <label for="size">Size:</label>
+      <select id="size" name="size">
+        <option value="1024x1024" selected>1024x1024</option>
+        <option value="1792x1024">1792x1024</option>
+        <option value="1024x1792">1024x1792</option>
+      </select>
+
+      <label for="style">Style:</label>
+      <select id="style" name="style">
+        <option value="vivid" selected>Vivid</option>
+        <option value="natural">Natural</option>
+      </select>
+
       <input type="submit" value="Submit" />
     </form>
-    <!-- Spinner and other elements -->
-    <a href="{% url 'home' %}" class="back-link">Go back to Home</a>
-    <!-- Existing JavaScript -->
+
+    <div id="loading" style="display: none">
+      <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+      Loading...
+    </div>
+
+    <script>
+      document
+        .getElementById("imagePromptForm")
+        .addEventListener("submit", function () {
+          document.getElementById("loading").style.display = "block";
+        });
+    </script>
+
+    <p><a href="{% url 'home' %}">Go back to Home</a></p>
   </body>
 </html>
