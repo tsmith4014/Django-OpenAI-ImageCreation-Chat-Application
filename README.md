@@ -7,13 +7,13 @@
 ![License](https://img.shields.io/badge/License-MIT-red.svg)
 
 
-![Separator Image](/chatgpt_interface/chatgpt/static/mars.png)
+![Sun Day On Mars](/chatgpt_interface/chatgpt/static/mars.png)
 
 ## Overview
 
 This is a Django-based application designed to interact with OpenAI's GPT models for generating text and image responses. It provides an interface to send user prompts to the GPT models, receives the generated response, and stores them for future reference. It also offers the ability to edit and delete stored responses.
 
-![Separator Image](/chatgpt_interface/chatgpt/static/marswar.png)
+![Mars War](/chatgpt_interface/chatgpt/static/marswar.png)
 
 ## Features
 
