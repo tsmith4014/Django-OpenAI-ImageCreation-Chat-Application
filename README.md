@@ -7,7 +7,7 @@
 ![License](https://img.shields.io/badge/License-MIT-red.svg)
 
 
-![Sun Day On Mars](/chatgpt_interface/chatgpt/static/mars.png)
+![Sunny Day On Mars](/chatgpt_interface/chatgpt/static/mars.png)
 
 ## Overview
 
